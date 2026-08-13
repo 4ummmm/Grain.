@@ -2,16 +2,7 @@
 <html>
 <head>
   <title>Grain · Main</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { height: 100vh; display: grid; grid-template-rows: 1fr 1fr; }
-    .top { display: grid; grid-template-columns: 1fr 1fr; }
-    .panel { border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; font-size: 2rem; overflow: hidden; position: relative; }
-    .bottom { border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; font-size: 2rem; }
-    #panel1 canvas { display: block; width: 100%; height: 100%; }
-    .toolbar { position: absolute; top: 10px; left: 10px; z-index: 10; display: flex; gap: 6px; }
-    .toolbar button { padding: 4px 10px; font-size: 14px; cursor: pointer; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="top">
@@ -20,6 +11,9 @@
         <button id="addRect">+ Rect</button>
         <button id="addArrow">+ Arrow</button>
         <button id="deleteSel">Delete</button>
+        <button id="zoomIn">Zoom +</button>
+        <button id="zoomOut">Zoom -</button>
+        <button id="zoomReset">Reset</button>
       </div>
       <canvas id="canvas"></canvas>
     </div>
@@ -27,77 +21,7 @@
   </div>
   <div class="bottom" id="panel3">Panel 3</div>
 
-  <!-- Fabric.js from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
-  <script>
-    (function() {
-      const canvas = new fabric.Canvas('canvas');
-
-      // Resize canvas to fill the panel
-      function resizeCanvas() {
-        const panel = document.getElementById('panel1');
-        canvas.setWidth(panel.clientWidth);
-        canvas.setHeight(panel.clientHeight);
-        canvas.renderAll();
-      }
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-
-      // Add rectangle
-      document.getElementById('addRect').addEventListener('click', () => {
-        const rect = new fabric.Rect({
-          left: 50, top: 50, width: 120, height: 80,
-          fill: '#f0f0f0', stroke: '#333', strokeWidth: 2,
-          selectable: true, hasControls: true, hasBorders: true,
-        });
-        // Add text inside
-        const text = new fabric.Textbox('Double-click', {
-          left: 50, top: 50, width: 120, fontSize: 16,
-          textAlign: 'center', originX: 'left', originY: 'top',
-          selectable: false, evented: false,
-        });
-        const group = new fabric.Group([rect, text], { left: 50, top: 50 });
-        canvas.add(group);
-        canvas.setActiveObject(group);
-        canvas.renderAll();
-      });
-
-      // Add arrow (one-way)
-      document.getElementById('addArrow').addEventListener('click', () => {
-        const arrow = new fabric.Line([50, 50, 200, 100], {
-          stroke: '#333', strokeWidth: 3,
-          selectable: true,
-        });
-        // Arrowhead as a triangle
-        const head = new fabric.Triangle({
-          left: 200, top: 100, width: 16, height: 16,
-          fill: '#333', angle: 30,
-          selectable: false, evented: false,
-        });
-        const group = new fabric.Group([arrow, head], { left: 0, top: 0 });
-        canvas.add(group);
-        canvas.setActiveObject(group);
-        canvas.renderAll();
-      });
-
-      // Delete selected
-      document.getElementById('deleteSel').addEventListener('click', () => {
-        const active = canvas.getActiveObject();
-        if (active) { canvas.remove(active); canvas.renderAll(); }
-      });
-
-      // Allow editing text by double-click (on groups)
-      canvas.on('mouse:dblclick', (e) => {
-        const target = e.target;
-        if (target && target.type === 'group') {
-          const textObj = target.getObjects().find(o => o.type === 'textbox');
-          if (textObj) {
-            textObj.enterEditing();
-            textObj.selectAll();
-          }
-        }
-      });
-    })();
-  </script>
+  <script src="diagram.js"></script>
 </body>
 </html>
