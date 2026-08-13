@@ -1,22 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
   const canvas = new fabric.Canvas('canvas');
 
-  // ---- Dotted background ----
-  function createDotsPattern() {
-    const dotCanvas = document.createElement('canvas');
-    dotCanvas.width = 20;
-    dotCanvas.height = 20;
-    const ctx = dotCanvas.getContext('2d');
-    ctx.fillStyle = '#ddd';
-    ctx.beginPath();
-    ctx.arc(10, 10, 1.5, 0, 2 * Math.PI);
-    ctx.fill();
-    return new fabric.Pattern({
-      source: dotCanvas,
-      repeat: 'repeat'
-    });
-  }
-  canvas.setBackgroundColor(new fabric.Color(createDotsPattern()), () => canvas.renderAll());
+// ---- Dotted background ----
+function createDotsPattern() {
+  const dotCanvas = document.createElement('canvas');
+  dotCanvas.width = 20;
+  dotCanvas.height = 20;
+  const ctx = dotCanvas.getContext('2d');
+  ctx.fillStyle = '#ddd';
+  ctx.beginPath();
+  ctx.arc(10, 10, 1.5, 0, 2 * Math.PI);
+  ctx.fill();
+  return new fabric.Pattern({
+    source: dotCanvas,
+    repeat: 'repeat'
+  });
+}
+canvas.setBackgroundColor(createDotsPattern(), () => canvas.renderAll());
 
   // ---- Resize ----
   function resizeCanvas() {
