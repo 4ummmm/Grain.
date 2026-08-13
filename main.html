@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grain.</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { height: 100vh; display: grid; grid-template-rows: 1fr 1fr; }
+    .top { display: grid; grid-template-columns: 1fr 1fr; }
+    .panel { border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; font-size: 2rem; }
+    .bottom { border: 1px solid #ccc; display: flex; justify-content: center; align-items: center; font-size: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="panel" id="panel1">Panel 1</div>
+    <div class="panel" id="panel2">Panel 2</div>
+  </div>
+  <div class="bottom" id="panel3">Panel 3</div>
+</body>
+</html>
